@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NN ElectroLab // Store — Electronics Projects, PCB Kits &amp; Firmware</title>
+  <meta name="description" content="NN ElectroLab // Store: Open-source and commercial electronics projects, schematics, firmware, PCB Gerbers, and DIY hardware kits engineered in India." />
+
+  <!-- Fonts: Inter (UI) & JetBrains Mono (Specs, BOM, Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: {
+              950: '#0b0f17',
+              900: '#101622',
+              850: '#141c2b',
+              800: '#1b2538',
+            },
+            accent: {
+              DEFAULT: '#00e5a0',
+              hover: '#00c98c',
+              amber: '#ffb020',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      background-color: #0b0f17;
+      color: #e2e8f0;
+    }
+
+    /* Subtle PCB Trace Grid Pattern */
+    .pcb-grid {
+      background-image:
+        linear-gradient(to right, rgba(0, 229, 160, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 229, 160, 0.055) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    /* Custom Scrollbar for Modals & Code Blocks */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #243147;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00e5a0;
+    }
+  </style>
+</head>
+<body class="bg-obsidian-950 text-slate-200 font-sans antialiased selection:bg-[#00e5a0]/25 selection:text-[#00e5a0]">
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header class="sticky top-0 z-40 border-b border-slate-800/90 bg-[#0b0f17]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group shrink-0">
+          <div class="w-9 h-9 rounded-xl bg-[#00e5a0]/10 border border-[#00e5a0]/40 flex items-center justify-center text-[#00e5a0] group-hover:bg-[#00e5a0]/20 transition">
+            <!-- IC / Microcontroller SVG Icon -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+              <rect x="9.5" y="9.5" width="5" height="5" />
+              <path d="M9 1v5M15 1v5M9 18v5M15 18v5M1 9h5M1 15h5M18 9h5M18 15h5" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span id="header-brand-name" class="font-mono font-bold text-sm sm:text-base tracking-tight text-white">
+              NN ElectroLab <span class="text-[#00e5a0]">//</span> Store
+            </span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 hidden sm:block">
+              Hardware Archive &amp; DIY Kits
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+          <a href="#catalog" onclick="setCategory('All')" class="hover:text-[#00e5a0] transition">Projects</a>
+          <a href="#catalog" onclick="setCategory('IoT & Telemetry')" class="hover:text-[#00e5a0] transition">Store</a>
+          <a href="#custom-builds" class="hover:text-[#ffb020] transition">Custom Builds</a>
+          <a href="#contact" class="hover:text-[#00e5a0] transition">Contact</a>
+        </nav>
+
+        <!-- Quick Social / Contact Icon Links -->
+        <div id="header-quick-links" class="flex items-center gap-2 shrink-0">
+          <!-- Populated from SITE_CONFIG in JS -->
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="relative overflow-hidden border-b border-slate-800/90 pcb-grid">
+    <!-- Subtle Ambient Lab Glows -->
+    <div class="pointer-events-none absolute -top-28 left-1/4 w-96 h-72 bg-[#00e5a0]/10 blur-3xl rounded-full"></div>
+    <div class="pointer-events-none absolute -bottom-24 right-1/4 w-80 h-64 bg-[#ffb020]/10 blur-3xl rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="max-w-3xl">
+        <!-- Status Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-[#00e5a0]/10 text-[#00e5a0] border border-[#00e5a0]/30 mb-6">
+          <span class="w-2 h-2 rounded-full bg-[#00e5a0] animate-pulse"></span>
+          OPEN-SOURCE SCHEMATICS • GERBERS • DIY KITS • PAN-INDIA
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-white leading-[1.12]">
+          Bench-Tested Electronics Projects, <span class="text-[#00e5a0]">Firmware</span> &amp; <span class="text-[#ffb020]">Hardware Kits</span>.
+        </h1>
+
+        <p class="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+          Welcome to <strong class="text-white font-semibold">NN ElectroLab</strong>. Explore complete circuit schematics, Bills of Materials, and embedded code. Download production-ready Gerber packs or order DIY kits and assembled prototypes directly with UPI.
+        </p>
+
+        <!-- Primary CTA Buttons -->
+        <div class="mt-8 flex flex-wrap items-center gap-3.5">
+          <a href="#catalog" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-[#00e5a0] hover:bg-[#00c98c] text-[#0b0f17] shadow-lg shadow-[#00e5a0]/15 transition">
+            Explore Projects &amp; Store
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <button type="button" onclick="openCustomModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-obsidian-900 hover:bg-obsidian-800 text-white border border-slate-700 hover:border-[#ffb020]/70 transition">
+            <svg class="w-4 h-4 text-[#ffb020]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            Request Custom Prototype
+          </button>
+        </div>
+
+        <!-- Quick Stats Bar -->
+        <div class="mt-10 pt-7 border-t border-slate-800/90 grid grid-cols-3 gap-4 sm:gap-8 max-w-xl font-mono">
+          <div>
+            <div id="hero-project-count" class="text-xl sm:text-2xl font-bold text-white">04</div>
+            <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">Active Projects</div>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-bold text-[#00e5a0]">Instant</div>
+            <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">Digital Downloads</div>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-bold text-[#ffb020]">Pan-India</div>
+            <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">Tracked Shipping</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SEARCH & CATEGORY FILTER BAR ==================== -->
+  <main id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div class="flex flex-col gap-5 mb-9">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-[#00e5a0] font-semibold">Hardware Catalog</span>
+          <h2 class="mt-1 text-2xl sm:text-3xl font-bold tracking-tight text-white">Projects &amp; Kits Store</h2>
+        </div>
+
+        <!-- Live Search Input -->
+        <div class="relative w-full md:w-80">
+          <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search ESP32, BMS, AI Camera, ROV..."
+            aria-label="Search electronics projects"
+            class="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl bg-obsidian-900 border border-slate-700/80 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00e5a0]/50 focus:border-[#00e5a0] transition"
+          />
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div id="category-filters" class="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects by category">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Active Filter Info Strip -->
+    <div id="filter-banner" class="hidden mb-6 flex items-center justify-between px-4 py-2.5 rounded-xl bg-obsidian-900 border border-slate-800 text-xs font-mono text-slate-400">
+      <span id="filter-banner-text"></span>
+      <button type="button" onclick="resetFilters()" class="text-[#00e5a0] hover:underline font-semibold">Clear Filters</button>
+    </div>
+
+    <!-- ==================== PROJECT & STORE GRID ==================== -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7">
+      <!-- Project cards rendered dynamically via JS -->
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="empty-state" class="hidden text-center py-16 px-4 rounded-2xl border border-dashed border-slate-700 bg-obsidian-900/50">
+      <p class="font-mono text-sm text-slate-300">No projects match your current search or category.</p>
+      <button type="button" onclick="resetFilters()" class="mt-4 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-[#00e5a0] text-[#0b0f17] hover:bg-[#00c98c] transition">
+        Show All Projects
+      </button>
+    </div>
+  </main>
+
+  <!-- ==================== CUSTOM BUILDS & ORDERING WORKFLOW ==================== -->
+  <section id="custom-builds" class="border-t border-slate-800/90 bg-obsidian-900/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-obsidian-900 to-[#0d1724] border border-slate-800">
+        <div class="max-w-2xl">
+          <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#ffb020] font-semibold">
+            <span class="w-2 h-2 rounded-full bg-[#ffb020]"></span>
+            Custom Engineering &amp; Prototyping
+          </span>
+          <h2 class="mt-2 text-2xl sm:text-3xl font-bold text-white">Need a Custom PCB, Firmware, or College / Lab Kit?</h2>
+          <p class="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
+            From schematic capture and 2/4-layer PCB layout to ESP32/STM32 firmware and 3D-printed enclosures—reach out directly on WhatsApp with your block diagram or requirements for a fast quote.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">
+          <button type="button" onclick="openCustomModal()" class="px-6 py-3.5 rounded-xl font-semibold text-sm bg-[#ffb020] hover:bg-[#f59e0b] text-[#0b0f17] shadow-lg shadow-[#ffb020]/15 transition text-center">
+            Request Custom Prototype
+          </button>
+          <a id="direct-wa-custom" href="#" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl font-semibold text-sm bg-obsidian-800 hover:bg-slate-800 text-white border border-slate-700 hover:border-[#00e5a0] transition text-center">
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT CARDS & FOOTER ==================== -->
+  <footer id="contact" class="border-t border-slate-800/90 bg-[#0b0f17]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="mb-8">
+        <span class="font-mono text-xs uppercase tracking-widest text-[#00e5a0] font-semibold">Direct Connect</span>
+        <h2 class="mt-1 text-2xl font-bold text-white">Get in Touch with NN ElectroLab</h2>
+      </div>
+
+      <!-- 4 Direct Contact Cards (Populated from SITE_CONFIG) -->
+      <div id="contact-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="mt-12 pt-6 border-t border-slate-800/90 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-400">
+        <span>© <span id="footer-year">2026</span> NN ElectroLab // Store. Engineered in India.</span>
+        <span>Zero-cost static deployment • GitHub Pages &amp; Cloudflare Pages ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== INTERACTIVE PROJECT DETAIL & CHECKOUT MODAL ==================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProjectModal()"></div>
+
+    <!-- Modal Wrapper -->
+    <div class="fixed inset-0 overflow-y-auto p-3 sm:p-6 flex items-start sm:items-center justify-center">
+      <div class="relative w-full max-w-6xl rounded-2xl bg-obsidian-900 border border-slate-700/90 shadow-2xl overflow-hidden my-auto">
+
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between gap-4 px-5 sm:px-6 py-4 border-b border-slate-800 bg-[#0b0f17]">
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1.5">
+              <span id="modal-category" class="text-[11px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-slate-800 text-[#00e5a0] border border-[#00e5a0]/25"></span>
+              <span id="modal-difficulty" class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-md"></span>
+            </div>
+            <h2 id="modal-title" class="text-lg sm:text-2xl font-bold text-white leading-snug"></h2>
+          </div>
+          <button
+            type="button"
+            onclick="closeProjectModal()"
+            aria-label="Close project modal"
+            class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition shrink-0"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Body: 2-Column Responsive Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 max-h-[82vh] overflow-y-auto">
+
+          <!-- Left Column: Technical Documentation Tabs (7 cols) -->
+          <div class="lg:col-span-7 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-800">
+            <!-- Tabs -->
+            <div class="flex items-center gap-1.5 p-1 rounded-xl bg-[#0b0f17] border border-slate-800 mb-6 overflow-x-auto">
+              <button type="button" data-tab="overview" onclick="switchModalTab('overview')" class="modal-tab flex-1 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition">
+                Overview &amp; Specs
+              </button>
+              <button type="button" data-tab="bom" onclick="switchModalTab('bom')" class="modal-tab flex-1 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition">
+                Bill of Materials (BOM)
+              </button>
+              <button type="button" data-tab="code" onclick="switchModalTab('code')" class="modal-tab flex-1 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition">
+                Code / Pinout
+              </button>
+            </div>
+
+            <!-- TAB 1: Overview & Specs -->
+            <div id="tab-overview" class="space-y-6">
+              <!-- Visual Preview + YouTube Demo Box -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div id="modal-visual" class="rounded-xl border border-slate-800 bg-[#070a10] overflow-hidden aspect-[16/10] flex items-center justify-center"></div>
+                <div id="modal-video" class="rounded-xl border border-slate-800 bg-[#070a10] overflow-hidden aspect-[16/10] flex flex-col items-center justify-center p-4 text-center"></div>
+              </div>
+
+              <!-- Description -->
+              <div>
+                <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-2">Technical Overview</h3>
+                <p id="modal-description" class="text-sm text-slate-300 leading-relaxed"></p>
+              </div>
+
+              <!-- Key Specifications Table -->
+              <div>
+                <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-2.5">Key Specifications</h3>
+                <div class="rounded-xl border border-slate-800 overflow-hidden">
+                  <table class="w-full text-left text-xs sm:text-sm font-mono">
+                    <tbody id="modal-specs" class="divide-y divide-slate-800/90"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: Bill of Materials (BOM) -->
+            <div id="tab-bom" class="hidden space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400">Component Breakdown</h3>
+                <span id="bom-total-est" class="text-xs font-mono font-semibold text-[#ffb020]"></span>
+              </div>
+              <div class="rounded-xl border border-slate-800 overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm font-mono">
+                  <thead class="bg-[#0b0f17] text-[11px] uppercase text-slate-400">
+                    <tr>
+                      <th class="px-4 py-3">Component</th>
+                      <th class="px-4 py-3">Spec / Package</th>
+                      <th class="px-3 py-3 text-center">Qty</th>
+                      <th class="px-4 py-3 text-right">Approx. Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody id="modal-bom" class="divide-y divide-slate-800/90"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- TAB 3: Code / Pinout -->
+            <div id="tab-code" class="hidden space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#00e5a0]"></span>
+                  <span id="modal-code-label" class="text-xs font-mono font-semibold text-slate-300">firmware.ino</span>
+                </div>
+                <button
+                  type="button"
+                  onclick="copySnippet()"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-800 hover:bg-[#00e5a0] hover:text-[#0b0f17] text-slate-200 transition"
+                >
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="p-4 rounded-xl bg-[#070a10] text-[#00e5a0] border border-slate-800 overflow-x-auto text-xs font-mono leading-relaxed"><code id="modal-code"></code></pre>
+            </div>
+          </div>
+
+          <!-- Right Column: Purchase / Order Panel (5 cols) -->
+          <div class="lg:col-span-5 p-5 sm:p-6 bg-[#0b0f17]/80 flex flex-col justify-between gap-6">
+            <div class="space-y-5">
+              <!-- Price Header -->
+              <div class="flex items-baseline justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <div class="text-xs font-mono uppercase tracking-wider text-slate-400">Select Edition</div>
+                  <div id="variant-delivery" class="text-[11px] font-mono text-[#ffb020] mt-0.5"></div>
+                </div>
+                <div id="checkout-price" class="text-2xl sm:text-3xl font-mono font-bold text-white">₹0</div>
+              </div>
+
+              <!-- Variant Radio Cards -->
+              <div id="variant-list" class="space-y-2.5"></div>
+
+              <!-- Included Items Box -->
+              <div class="p-4 rounded-xl bg-obsidian-900 border border-slate-800">
+                <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2.5">What's Included</div>
+                <ul id="variant-includes" class="space-y-2 text-xs text-slate-300"></ul>
+              </div>
+            </div>
+
+            <!-- Checkout Action Buttons -->
+            <div class="space-y-3">
+              <div id="paid-cta-group" class="space-y-2.5">
+                <button
+                  type="button"
+                  onclick="openPaymentCheckout()"
+                  class="w-full py-3 px-4 rounded-xl font-semibold text-sm bg-[#00e5a0] hover:bg-[#00c98c] text-[#0b0f17] shadow-lg shadow-[#00e5a0]/15 flex items-center justify-center gap-2 transition"
+                >
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                    <path d="M2 10h20"></path>
+                  </svg>
+                  Pay Now (UPI / Card)
+                </button>
+
+                <a
+                  id="whatsapp-order-btn"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-full py-3 px-4 rounded-xl font-semibold text-sm bg-obsidian-800 hover:bg-slate-800 text-white border border-slate-700 hover:border-[#00e5a0] flex items-center justify-center gap-2 transition"
+                >
+                  <svg class="w-4 h-4 text-[#00e5a0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                  </svg>
+                  Order via WhatsApp (0% Fee UPI)
+                </a>
+              </div>
+
+              <!-- Open Source / Repo Link -->
+              <a
+                id="modal-github-btn"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-2.5 px-4 rounded-xl font-mono font-semibold text-xs text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/80 flex items-center justify-center gap-2 transition"
+              >
+                <svg class="w-4 h-4 text-[#ffb020]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                <span id="modal-github-label">View Docs &amp; Repo on GitHub</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CUSTOM PROTOTYPE REQUEST MODAL ==================== -->
+  <div id="custom-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="custom-modal-title">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCustomModal()"></div>
+    <div class="fixed inset-0 overflow-y-auto p-4 flex items-center justify-center">
+      <div class="relative w-full max-w-lg rounded-2xl bg-obsidian-900 border border-slate-700 shadow-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 id="custom-modal-title" class="text-lg font-bold text-white">Request a Custom Prototype</h3>
+          <button type="button" onclick="closeCustomModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+          Share your project brief below. Clicking submit opens WhatsApp with a formatted message directly to <span class="text-[#00e5a0] font-mono">+91 91819 77789</span>.
+        </p>
+        <form onsubmit="sendCustomWhatsApp(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1">Your Name</label>
+            <input id="cust-name" type="text" required placeholder="e.g. Rohan Das" class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-[#0b0f17] border border-slate-700 text-white focus:outline-none focus:border-[#00e5a0]" />
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1">Category</label>
+            <select id="cust-cat" class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-[#0b0f17] border border-slate-700 text-white focus:outline-none focus:border-[#00e5a0]">
+              <option>Custom PCB Design &amp; Fabrication</option>
+              <option>IoT / ESP32 / STM32 Firmware</option>
+              <option>Robotics / Drone / ROV Controller</option>
+              <option>Battery Pack / BMS Design</option>
+              <option>Bulk DIY Kits for Workshop / College</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1">Project Requirements</label>
+            <textarea id="cust-details" rows="3" required placeholder="Mention sensors, power voltage, target budget, or deadline..." class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-[#0b0f17] border border-slate-700 text-white focus:outline-none focus:border-[#00e5a0]"></textarea>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl font-semibold text-sm bg-[#00e5a0] hover:bg-[#00c98c] text-[#0b0f17] transition">
+            Send Brief on WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 max-w-sm">
+    <div class="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-obsidian-900 text-white border border-[#00e5a0]/50 shadow-2xl text-xs sm:text-sm font-mono">
+      <span class="w-2 h-2 rounded-full bg-[#00e5a0] shrink-0"></span>
+      <span id="toast-text">Notification</span>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT: CONFIG, DATA & APP LOGIC ==================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. SITE CONFIGURATION
+     * =========================================================================
+     * Pre-configured for NN ElectroLab // Store.
+     */
+    const SITE_CONFIG = {
+      brandName: 'NN ElectroLab // Store',
+      whatsappNumber: '919181977789',
+      whatsappDisplay: '+91 91819 77789',
+      email: 'thenabadipnath@gmail.com',
+      githubUrl: 'https://github.com/NabadipNath',
+      githubHandle: 'NabadipNath',
+      youtubeUrl: 'https://www.youtube.com/@CC.nabadipnath',
+      youtubeHandle: '@CC.nabadipnath',
+      currency: '₹',
+    };
+
+    /**
+     * =========================================================================
+     * 2. PROJECTS & STORE CATALOG (EASY TO EDIT!)
+     * =========================================================================
+     * How to add your own project:
+     * 1. Copy one object `{ ... }` below and paste it inside the `PROJECTS` array.
+     * 2. Optional Photo: set `imageUrl: 'images/my-project.jpg'` (leave empty '' to use the built-in SVG).
+     * 3. Optional YouTube Demo: set `youtubeEmbedUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID'`.
+     * 4. Payment Links: replace `paymentUrl` in each variant with your live Razorpay / Instamojo URL.
+     */
+    const PROJECTS = [
+      {
+        id: 'solar-iot-telemetry-node',
+        title: 'Solar IoT Telemetry & Sensor Node',
+        shortDesc: 'Ultra-low-power ESP32-S3 + LoRa 433MHz environmental & water-level telemetry node with MPPT solar charging for remote deployments.',
+        fullDesc: 'Engineered for off-grid farms, weather stations, and flood monitoring where Wi-Fi is unavailable. Achieves sub-30 µA deep-sleep draw, enabling year-round operation from a single 18650 LiFePO4 cell and 5W solar panel. Streams waterproof ultrasonic, temperature, humidity, and battery telemetry up to 6 km line-of-sight.',
+        categories: ['IoT & Telemetry', 'Open Source'],
+        difficulty: 'Intermediate',
+        tags: ['ESP32-S3', 'SX1278 LoRa', 'MPPT Solar', 'IP65'],
+        svgType: 'solar-iot',
+        imageUrl: '', // Optional: e.g. 'assets/solar-node.jpg'
+        youtubeEmbedUrl: '', // Optional: e.g. 'https://www.youtube.com/embed/VIDEO_ID'
+        githubUrl: 'https://github.com/NabadipNath',
+        specs: [
+          ['MCU', 'ESP32-S3-WROOM-1 (Wi-Fi / BLE)'],
+          ['Radio Link', 'SX1278 LoRa 433 MHz (+20 dBm)'],
+          ['Deep Sleep Draw', '26 µA @ 3.3V (RTC Timer Wake)'],
+          ['Solar Charger', 'CN3791 1S MPPT (5V–6V Panel)'],
+          ['Sensor Interfaces', 'I2C (BME280), UART/Ultrasonic, ADC'],
+        ],
+        bom: [
+          { part: 'ESP32-S3-WROOM-1', spec: '8MB Flash Module', qty: 1, approxCost: 340 },
+          { part: 'Ra-02 SX1278 LoRa', spec: '433 MHz SPI + IPEX', qty: 1, approxCost: 380 },
+          { part: 'JSN-SR04T Probe', spec: 'Waterproof Ultrasonic', qty: 1, approxCost: 420 },
+          { part: 'BME280 Breakout', spec: 'Temp/Humidity/Pressure', qty: 1, approxCost: 220 },
+          { part: 'CN3791 MPPT Board', spec: '1S Solar Charge IC', qty: 1, approxCost: 190 },
+          { part: 'Custom 2-Layer PCB', spec: '68x54mm ENIG Matte Black', qty: 1, approxCost: 250 },
+        ],
+        codeLabel: 'solar_lora_node.ino',
+        codeSnippet: `// NN ElectroLab — Solar LoRaWAN Telemetry Node (ESP32-S3)
+#include <SPI.h>
+#include <LoRa.h>
+#include "esp_sleep.h"
+
+#define LORA_SS   10
+#define LORA_RST   9
+#define LORA_DIO0  8
+#define SLEEP_SEC 600  // Transmit every 10 minutes
+
+void setup() {
+  LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
+  if (LoRa.begin(433E6)) {
+    LoRa.setSpreadingFactor(10);
+    LoRa.beginPacket();
+    LoRa.printf("{\"node\":\"NN01\",\"lvl\":%.1f,\"vbat\":%.2f}",
+                readUltrasonicCm(), readBatteryV());
+    LoRa.endPacket();
+    LoRa.sleep();
+  }
+  esp_sleep_enable_timer_wakeup((uint64_t)SLEEP_SEC * 1000000ULL);
+  esp_deep_sleep_start();
+}
+void loop() {}`,
+        variants: [
+          {
+            label: 'Digital Files: Gerbers + Code + BOM',
+            sublabel: 'KiCad 8 files, Gerber ZIP, Firmware & 3D STL enclosure',
+            price: 399,
+            delivery: 'Instant Digital Download',
+            paymentUrl: 'https://rzp.io/l/placeholder-solar-files',
+            includes: [
+              'Production Gerber & Drill ZIP (JLCPCB / LionCircuits ready)',
+              'Full KiCad 8 Schematic, PCB layout & interactive BOM',
+              'Commented PlatformIO / Arduino LoRa firmware',
+              'Weatherproof pole-mount STL files',
+            ],
+          },
+          {
+            label: 'DIY Hardware Kit',
+            sublabel: 'Fabricated PCB + All Components + Digital Pack',
+            price: 1899,
+            delivery: 'Ships in 48 hrs (+ ₹90 shipping)',
+            paymentUrl: 'https://rzp.io/l/placeholder-solar-kit',
+            includes: [
+              '2-layer matte-black PCB with gold-plated pads',
+              'ESP32-S3, SX1278 LoRa, BME280, SMA antenna & passives',
+              'Step-by-step soldering & calibration guide',
+              'All Digital Files included free',
+            ],
+          },
+          {
+            label: 'Assembled & Tested Unit',
+            sublabel: 'Soldered, RF-tested, pre-flashed & ready to deploy',
+            price: 2799,
+            delivery: 'Free Pan-India Tracked Shipping',
+            paymentUrl: 'https://rzp.io/l/placeholder-solar-assembled',
+            includes: [
+              'Fully assembled, ultrasonic-cleaned & bench-tested unit',
+              'Waterproof JSN-SR04T sensor + 433 MHz antenna included',
+              'Pre-flashed firmware + WhatsApp setup support',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'edge-ai-smart-camera',
+        title: 'Edge AI Smart Camera Module',
+        shortDesc: 'Offline computer-vision camera HAT for Raspberry Pi with 850nm IR night-vision ring, PWM fan driver, and Python ONNX/YOLO pipeline.',
+        fullDesc: 'Run real-time object detection, security alerts, or industrial part counting completely offline with zero cloud fees. The custom carrier HAT adds a MOSFET-controlled 850nm IR LED ring for night vision, quiet PWM thermal cooling, and surge-protected 5V power delivery.',
+        categories: ['Edge AI & Cameras', 'IoT & Telemetry'],
+        difficulty: 'Intermediate',
+        tags: ['Raspberry Pi', 'ONNX / YOLO', '850nm IR', 'Python'],
+        svgType: 'edge-ai',
+        imageUrl: '',
+        youtubeEmbedUrl: '',
+        githubUrl: 'https://github.com/NabadipNath',
+        specs: [
+          ['Compatible SBC', 'Raspberry Pi Zero 2 W / Pi 4 / Pi 5'],
+          ['Inference Engine', 'Python 3.11 + OpenCV + ONNX Runtime'],
+          ['Night Illumination', '6x 850nm IR LEDs (GPIO PWM Dimming)'],
+          ['Cooling', '30mm 5V PWM Fan Header w/ Flyback Diode'],
+          ['Alert Outputs', 'MQTT JSON, Telegram Bot, Relay GPIO'],
+        ],
+        bom: [
+          { part: 'Vision Carrier HAT PCB', spec: '65x30mm 40-Pin GPIO', qty: 1, approxCost: 220 },
+          { part: 'AO3400A N-MOSFET', spec: '30V 5.7A SOT-23', qty: 2, approxCost: 30 },
+          { part: '850nm IR LEDs', spec: '5mm 60° High-Power', qty: 6, approxCost: 90 },
+          { part: '30x30mm 5V Fan', spec: 'Brushless Low-Noise', qty: 1, approxCost: 160 },
+          { part: 'SMBJ5.0A TVS Diode', spec: '5V ESD Surge Clamp', qty: 1, approxCost: 25 },
+          { part: 'PETG Snap Enclosure', spec: 'Tripod 1/4" Nut Mount', qty: 1, approxCost: 350 },
+        ],
+        codeLabel: 'edge_yolo_mqtt.py',
+        codeSnippet: `# NN ElectroLab — Edge AI Camera ONNX + MQTT Pipeline
+import cv2, json, time
+import onnxruntime as ort
+import paho.mqtt.client as mqtt
+
+ort_sess = ort.InferenceSession("yolov8n_int8.onnx")
+client = mqtt.Client()
+client.connect("192.168.1.10", 1883, 60)
+
+cam = cv2.VideoCapture(0)
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        continue
+    hits = detect_objects(ort_sess, frame, threshold=0.55)
+    if hits:
+        client.publish("nnelectrolab/cam/alert",
+                       json.dumps({"ts": int(time.time()), "hits": hits}))`,
+        variants: [
+          {
+            label: 'Digital Files: Gerbers + Code + BOM',
+            sublabel: 'Carrier HAT Gerbers, Python ONNX repo & 3D Case STLs',
+            price: 499,
+            delivery: 'Instant Digital Download',
+            paymentUrl: 'https://rzp.io/l/placeholder-edgeai-files',
+            includes: [
+              'IR Vision Carrier HAT Gerbers + KiCad schematic',
+              'Ready-to-run Python ONNX/YOLO + MQTT alert script',
+              'Tripod-ready 3D printable enclosure STL files',
+            ],
+          },
+          {
+            label: 'DIY Hardware Kit',
+            sublabel: 'Carrier HAT PCB + IR LEDs + Fan + PETG Case (No Pi)',
+            price: 1299,
+            delivery: 'Ships in 48 hrs (+ ₹90 shipping)',
+            paymentUrl: 'https://rzp.io/l/placeholder-edgeai-kit',
+            includes: [
+              'Fabricated Carrier HAT PCB + 40-pin stacking header',
+              '6x 850nm IR LEDs, MOSFETs, TVS diode & 30mm fan',
+              '3D-printed matte-black enclosure + Digital Pack',
+            ],
+          },
+          {
+            label: 'Assembled & Tested Unit',
+            sublabel: 'Assembled Carrier HAT + Enclosure (Add your Pi & Cam)',
+            price: 1799,
+            delivery: 'Free Pan-India Tracked Shipping',
+            paymentUrl: 'https://rzp.io/l/placeholder-edgeai-assembled',
+            includes: [
+              'Fully soldered & bench-tested IR Vision HAT',
+              'Mounted cooling fan & PETG tripod enclosure',
+              'Full Python software package + setup guide',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'multi-voltage-lifepo4-bms',
+        title: 'Multi-Voltage LiFePO4 Power Bank & BMS',
+        shortDesc: '4S 12.8V 30A LiFePO4 smart power station PCB with 2oz copper busbars, INA219 I2C telemetry, USB-C PD 65W, and regulated 12V/5V/3.3V outputs.',
+        fullDesc: 'Built for field robotics, portable soldering stations, and solar backup rigs. Features heavy 2oz copper pours, 4S LiFePO4 protection with active balancing taps, high-side INA219 voltage/current sensing over I2C, and clean buck rails for powering microcontrollers and SBCs simultaneously.',
+        categories: ['Power & BMS', 'Open Source'],
+        difficulty: 'Advanced',
+        tags: ['4S LiFePO4', '2oz Copper', '30A BMS', 'INA219 I2C'],
+        svgType: 'bms-power',
+        imageUrl: '',
+        youtubeEmbedUrl: '',
+        githubUrl: 'https://github.com/NabadipNath',
+        specs: [
+          ['Pack Config', '4S LiFePO4 (12.8V Nom / 14.6V Charge)'],
+          ['Continuous Load', '30A Main XT60 (45A Peak 10s)'],
+          ['Regulated Rails', 'USB-C PD 65W + 5V/3A + 3.3V/1A'],
+          ['Telemetry', 'INA219 I2C (Voltage, Current, Watt-Hours)'],
+          ['Safety Suite', 'OVP, UVP, OCP, Short-Circuit & NTC Probe'],
+        ],
+        bom: [
+          { part: '4S BMS Front-End IC', spec: 'LiFePO4 3.65V/cell OVP', qty: 1, approxCost: 260 },
+          { part: 'HYG025N04 MOSFET', spec: '40V Ultra-Low RDS(on)', qty: 6, approxCost: 360 },
+          { part: 'INA219AIDCNR', spec: 'I2C Current/Power Sensor', qty: 1, approxCost: 180 },
+          { part: '2 mΩ Shunt Resistor', spec: '2512 3W 1% Precision', qty: 1, approxCost: 65 },
+          { part: 'TPS54302 Buck IC', spec: '28V 3A Sync Step-Down', qty: 1, approxCost: 110 },
+          { part: 'XT60PW Connectors', spec: 'Right-Angle PCB Mount', qty: 3, approxCost: 150 },
+        ],
+        codeLabel: 'bms_pinout_telemetry.cpp',
+        codeSnippet: `// NN ElectroLab — 4S LiFePO4 BMS I2C Telemetry & Pinout
+// I2C Header: [1: 3.3V] [2: GND] [3: SDA -> GPIO21] [4: SCL -> GPIO22]
+#include <Wire.h>
+#include <Adafruit_INA219.h>
+
+Adafruit_INA219 bmsSensor(0x40);
+
+void readPackHealth() {
+  float packV = bmsSensor.getBusVoltage_V();
+  float currA = bmsSensor.getCurrent_mA() / 1000.0f;
+  float watts = packV * currA;
+  float soc   = constrain((packV - 11.2f) / (13.6f - 11.2f) * 100.0f, 0, 100);
+
+  Serial.printf("LiFePO4 4S | %.2fV | %.2fA | %.1fW | SoC: %.0f%%\\n",
+                packV, currA, watts, soc);
+}`,
+        variants: [
+          {
+            label: 'Digital Files: Gerbers + Code + BOM',
+            sublabel: '2oz Copper 4-Layer Gerbers, CPL, KiCad & Arduino lib',
+            price: 599,
+            delivery: 'Instant Digital Download',
+            paymentUrl: 'https://rzp.io/l/placeholder-bms-files',
+            includes: [
+              '4-Layer 2oz Copper Gerber, Drill, BOM & Pick-and-Place CSV',
+              'Complete KiCad 8 schematic & thermal layout notes',
+              'INA219 OLED / ESP32 battery monitor sketch',
+            ],
+          },
+          {
+            label: 'DIY Hardware Kit',
+            sublabel: '2oz Bare PCB + MOSFETs + Shunt + XT60s + Digital Pack',
+            price: 1699,
+            delivery: 'Ships in 48 hrs (+ ₹90 shipping)',
+            paymentUrl: 'https://rzp.io/l/placeholder-bms-kit',
+            includes: [
+              'Fabricated 2oz Copper PCB with heavy solder mask openings',
+              'Matched low-RDS(on) MOSFETs, 2 mΩ shunt & XT60 jacks',
+              'JST-XH 5-pin balance header + Digital Files',
+            ],
+          },
+          {
+            label: 'Assembled & Tested Unit',
+            sublabel: 'Load-tested to 25A continuous + calibrated INA219',
+            price: 2699,
+            delivery: 'Free Pan-India Tracked Shipping',
+            paymentUrl: 'https://rzp.io/l/placeholder-bms-assembled',
+            includes: [
+              'Fully assembled & 25A electronic-load verified BMS board',
+              'XT60 input/output pigtails + NTC thermal probe',
+              'Full schematic PDF & telemetry firmware',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'autonomous-rover-rov-controller',
+        title: 'Autonomous Rover / ROV Controller',
+        shortDesc: 'STM32F411 dual 15A H-bridge & 6-channel brushless ESC thruster controller with onboard IMU, quadrature encoders, CAN bus, and ROS 2 bridge.',
+        fullDesc: 'A versatile motion-control brain designed for both 4WD ground rovers and underwater ROVs. Runs a deterministic 1 kHz closed-loop PID controller on the STM32F411 while exposing clean UART, USB-C, and CAN interfaces for Raspberry Pi, Jetson, or MAVLink / ROS 2 autonomy stacks.',
+        categories: ['Robotics & Drones', 'Power & BMS'],
+        difficulty: 'Advanced',
+        tags: ['STM32F411', 'Dual 15A', 'CAN / ROS 2', 'IMU + Encoders'],
+        svgType: 'rover-ctrl',
+        imageUrl: '',
+        youtubeEmbedUrl: '',
+        githubUrl: 'https://github.com/NabadipNath',
+        specs: [
+          ['Main MCU', 'STM32F411CEU6 (100 MHz ARM Cortex-M4)'],
+          ['Drive Outputs', '2x 15A Brushed H-Bridge + 6x PWM ESC Ch'],
+          ['Supply Range', '7V – 28V DC (2S to 6S LiPo / LiFePO4)'],
+          ['Onboard Sensors', 'MPU-6500 6-Axis IMU + 2x Quad Encoders'],
+          ['Comms Bus', 'USB-C CDC, 3.3V UART, TJA1050 CAN Bus'],
+        ],
+        bom: [
+          { part: 'STM32F411CEU6', spec: 'UFQFPN-48 100MHz MCU', qty: 1, approxCost: 320 },
+          { part: 'DRV8701E Driver', spec: 'Full-Bridge Gate Driver', qty: 2, approxCost: 340 },
+          { part: 'CSD18532 MOSFET', spec: '60V Power N-MOSFET', qty: 8, approxCost: 480 },
+          { part: 'MPU-6500 IMU', spec: 'SPI 6-Axis Gyro/Accel', qty: 1, approxCost: 140 },
+          { part: 'TJA1050 CAN IC', spec: 'High-Speed CAN Transceiver', qty: 1, approxCost: 60 },
+          { part: '20A Terminal Blocks', spec: '5.08mm Pitch Screw', qty: 3, approxCost: 90 },
+        ],
+        codeLabel: 'rover_pid_loop.c',
+        codeSnippet: `// NN ElectroLab — STM32F4 1kHz Closed-Loop Velocity PID
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if (htim->Instance == TIM2) {
+    int32_t delta = (int16_t)__HAL_TIM_GET_COUNTER(&htim3);
+    __HAL_TIM_SET_COUNTER(&htim3, 0);
+
+    float rpm = (delta / (float)TICKS_PER_REV) * 60000.0f;
+    float err = targetRpm - rpm;
+    integral  = clampf(integral + err * 0.001f, -45.0f, 45.0f);
+    float out = (KP * err) + (KI * integral) + (KD * (err - prevErr) * 1000.0f);
+    prevErr   = err;
+
+    driveMotorPWM(CH_LEFT, out);
+  }
+}`,
+        variants: [
+          {
+            label: 'Digital Files: Gerbers + Code + BOM',
+            sublabel: '4-Layer Gerbers, STM32CubeIDE firmware & ROS 2 node',
+            price: 499,
+            delivery: 'Instant Digital Download',
+            paymentUrl: 'https://rzp.io/l/placeholder-rover-files',
+            includes: [
+              '4-Layer PCB Gerbers, KiCad source & BOM CSV',
+              'STM32CubeIDE PID + MAVLink/Serial firmware',
+              'ROS 2 Humble/Jazzy cmd_vel & odometry driver package',
+            ],
+          },
+          {
+            label: 'DIY Hardware Kit',
+            sublabel: 'SMD Pre-Soldered PCB + THT Terminals & Heatsink',
+            price: 2199,
+            delivery: 'Ships in 48 hrs (+ ₹90 shipping)',
+            paymentUrl: 'https://rzp.io/l/placeholder-rover-kit',
+            includes: [
+              'Fine-pitch STM32 & SMD passives pre-assembled at lab',
+              'High-current screw terminals, headers & aluminum heatsink',
+              'All Digital Files & ROS 2 scripts included',
+            ],
+          },
+          {
+            label: 'Assembled & Tested Unit',
+            sublabel: 'Load-tested @ 12A/ch, pre-flashed & ready for ROS 2',
+            price: 3199,
+            delivery: 'Free Pan-India Tracked Shipping',
+            paymentUrl: 'https://rzp.io/l/placeholder-rover-assembled',
+            includes: [
+              'Fully assembled, load-tested Rover/ROV Controller',
+              'Anodized heatsink + USB-C data cable + CAN jumper',
+              'Pre-flashed bootloader & 1-on-1 setup guidance',
+            ],
+          },
+        ],
+      },
+    ];
+
+    const CATEGORIES = [
+      'All',
+      'IoT & Telemetry',
+      'Robotics & Drones',
+      'Power & BMS',
+      'Edge AI & Cameras',
+      'Open Source',
+    ];
+
+    // =========================================================================
+    // 3. STATE MANAGEMENT
+    // =========================================================================
+    let activeCategory = 'All';
+    let searchQuery = '';
+    let activeProject = null;
+    let activeVariantIdx = 0;
+    let toastTimeout = null;
+
+    // =========================================================================
+    // 4. INLINE HARDWARE SVG ILLUSTRATIONS
+    // =========================================================================
+    function getHardwareSVG(type) {
+      const illustrations = {
+        'solar-iot': `
+          <svg viewBox="0 0 360 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="200" fill="#070b12"/>
+            <g stroke="#00e5a0" stroke-opacity="0.12" stroke-width="1">
+              <path d="M0 40h360M0 80h360M0 120h360M0 160h360M45 0v200M90 0v200M135 0v200M180 0v200M225 0v200M270 0v200M315 0v200"/>
+            </g>
+            <rect x="68" y="32" width="224" height="132" rx="12" fill="#0d1b18" stroke="#00e5a0" stroke-width="2"/>
+            <circle cx="82" cy="46" r="4.5" fill="#070b12" stroke="#ffb020" stroke-width="1.5"/>
+            <circle cx="278" cy="46" r="4.5" fill="#070b12" stroke="#ffb020" stroke-width="1.5"/>
+            <circle cx="82" cy="150" r="4.5" fill="#070b12" stroke="#ffb020" stroke-width="1.5"/>
+            <circle cx="278" cy="150" r="4.5" fill="#070b12" stroke="#ffb020" stroke-width="1.5"/>
+            <rect x="96" y="56" width="68" height="78" rx="5" fill="#131e2e" stroke="#38bdf8" stroke-width="1.5"/>
+            <rect x="104" y="64" width="52" height="46" rx="2" fill="#1e293b"/>
+            <text x="130" y="91" fill="#e2e8f0" font-family="monospace" font-size="9.5" font-weight="bold" text-anchor="middle">ESP32-S3</text>
+            <rect x="192" y="60" width="64" height="50" rx="4" fill="#131e2e" stroke="#00e5a0" stroke-width="1.5"/>
+            <text x="224" y="89" fill="#00e5a0" font-family="monospace" font-size="9.5" font-weight="bold" text-anchor="middle">SX1278</text>
+            <path d="M164 76h28M164 88h28M164 100h28M224 110v28h-56" fill="none" stroke="#00e5a0" stroke-width="1.6"/>
+            <rect x="192" y="124" width="64" height="22" rx="3" fill="#2b2110" stroke="#ffb020" stroke-width="1.2"/>
+            <text x="224" y="138" fill="#ffb020" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle">MPPT 5V</text>
+            <path d="M298 62c12-10 12 24 0 14M310 52c18-16 18 44 0 28" fill="none" stroke="#00e5a0" stroke-width="2" stroke-linecap="round"/>
+            <text x="180" y="185" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">SOLAR LORA NODE // 433MHz // 26µA SLEEP</text>
+          </svg>`,
+        'edge-ai': `
+          <svg viewBox="0 0 360 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="200" fill="#070b12"/>
+            <g stroke="#00e5a0" stroke-opacity="0.1" stroke-width="1">
+              <path d="M0 40h360M0 80h360M0 120h360M0 160h360M60 0v200M120 0v200M180 0v200M240 0v200M300 0v200"/>
+            </g>
+            <rect x="78" y="30" width="204" height="136" rx="14" fill="#101827" stroke="#00e5a0" stroke-width="2"/>
+            <circle cx="180" cy="98" r="44" fill="#05080f" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="180" cy="98" r="29" fill="#082f49" stroke="#00e5a0" stroke-width="1.6"/>
+            <circle cx="180" cy="98" r="14" fill="#00e5a0" fill-opacity="0.22" stroke="#7dd3fc" stroke-width="1.5"/>
+            <circle cx="174" cy="92" r="4" fill="#e0f2fe" fill-opacity="0.85"/>
+            <!-- 6x IR LEDs -->
+            <g fill="#ffb020" stroke="#fde68a" stroke-width="1">
+              <circle cx="116" cy="70" r="5"/><circle cx="116" cy="98" r="5"/><circle cx="116" cy="126" r="5"/>
+              <circle cx="244" cy="70" r="5"/><circle cx="244" cy="98" r="5"/><circle cx="244" cy="126" r="5"/>
+            </g>
+            <!-- AI Detection Brackets -->
+            <path d="M144 62h12M144 62v12M216 62h-12M216 62v12M144 134h12M144 134v-12M216 134h-12M216 134v-12" stroke="#00e5a0" stroke-width="2" fill="none"/>
+            <text x="180" y="185" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">EDGE-AI VISION HAT // 850nm IR + ONNX</text>
+          </svg>`,
+        'bms-power': `
+          <svg viewBox="0 0 360 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="200" fill="#070b12"/>
+            <rect x="52" y="34" width="256" height="128" rx="10" fill="#0d1b18" stroke="#00e5a0" stroke-width="2"/>
+            <!-- 2oz Copper Busbars -->
+            <rect x="68" y="48" width="224" height="16" rx="3" fill="#ffb020"/>
+            <rect x="68" y="132" width="224" height="16" rx="3" fill="#00e5a0" fill-opacity="0.85"/>
+            <text x="180" y="59" fill="#0b0f17" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">+12.8V 30A 2oz COPPER BUSBAR</text>
+            <text x="180" y="143" fill="#0b0f17" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">GND RETURN // INA219 SHUNT</text>
+            <!-- 4S Cell Monitors -->
+            <g font-family="monospace" font-size="9" text-anchor="middle">
+              <rect x="76" y="76" width="42" height="44" rx="4" fill="#131e2e" stroke="#00e5a0"/>
+              <text x="97" y="102" fill="#00e5a0" font-weight="bold">S1</text>
+              <rect x="128" y="76" width="42" height="44" rx="4" fill="#131e2e" stroke="#00e5a0"/>
+              <text x="149" y="102" fill="#00e5a0" font-weight="bold">S2</text>
+              <rect x="180" y="76" width="42" height="44" rx="4" fill="#131e2e" stroke="#00e5a0"/>
+              <text x="201" y="102" fill="#00e5a0" font-weight="bold">S3</text>
+              <rect x="232" y="76" width="42" height="44" rx="4" fill="#131e2e" stroke="#00e5a0"/>
+              <text x="253" y="102" fill="#00e5a0" font-weight="bold">S4</text>
+            </g>
+            <text x="180" y="185" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">4S LiFePO4 BMS // USB-C PD 65W + I2C</text>
+          </svg>`,
+        'rover-ctrl': `
+          <svg viewBox="0 0 360 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="200" fill="#070b12"/>
+            <rect x="58" y="32" width="244" height="132" rx="12" fill="#101827" stroke="#00e5a0" stroke-width="2"/>
+            <!-- STM32F4 Center MCU -->
+            <rect x="148" y="66" width="64" height="64" rx="6" fill="#162235" stroke="#38bdf8" stroke-width="2"/>
+            <text x="180" y="102" fill="#e2e8f0" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">STM32F4</text>
+            <!-- Left & Right 15A H-Bridges -->
+            <rect x="74" y="52" width="46" height="92" rx="5" fill="#0b2921" stroke="#00e5a0" stroke-width="1.6"/>
+            <text x="97" y="101" fill="#00e5a0" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">M1 15A</text>
+            <rect x="240" y="52" width="46" height="92" rx="5" fill="#0b2921" stroke="#00e5a0" stroke-width="1.6"/>
+            <text x="263" y="101" fill="#00e5a0" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">M2 15A</text>
+            <!-- High-Speed Traces -->
+            <path d="M120 78h28M120 114h28M212 78h28M212 114h28" stroke="#00e5a0" stroke-width="2"/>
+            <!-- CAN & IMU Badges -->
+            <rect x="150" y="140" width="60" height="16" rx="3" fill="#ffb020"/>
+            <text x="180" y="151" fill="#0b0f17" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle">CAN + IMU</text>
+            <text x="180" y="185" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">ROVER / ROV CONTROLLER // 1kHz PID</text>
+          </svg>`,
+      };
+      return illustrations[type] || illustrations['solar-iot'];
+    }
+
+    function renderProjectVisual(project) {
+      if (project.imageUrl) {
+        return `<img src="${project.imageUrl}" alt="${project.title}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML = getHardwareSVG('${project.svgType}')" />`;
+      }
+      return getHardwareSVG(project.svgType);
+    }
+
+    // =========================================================================
+    // 5. FORMATTING & UTILITY HELPERS
+    // =========================================================================
+    function formatINR(val) {
+      if (val === 0) return 'FREE';
+      return `${SITE_CONFIG.currency}${val.toLocaleString('en-IN')}`;
+    }
+
+    function getDifficultyClass(level) {
+      if (level === 'Beginner-Friendly') return 'bg-[#00e5a0]/15 text-[#00e5a0] border border-[#00e5a0]/30';
+      if (level === 'Intermediate') return 'bg-sky-500/15 text-sky-300 border border-sky-500/30';
+      return 'bg-[#ffb020]/15 text-[#ffb020] border border-[#ffb020]/30';
+    }
+
+    function buildWhatsAppUrl(message) {
+      return `https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3400);
+    }
+
+    // =========================================================================
+    // 6. RENDER HEADER ICONS, CATEGORIES, CARDS & CONTACT FOOTER
+    // =========================================================================
+    function renderHeaderQuickLinks() {
+      const container = document.getElementById('header-quick-links');
+      const waHello = buildWhatsAppUrl(`Hi ${SITE_CONFIG.brandName}! I have a quick question about your electronics projects.`);
+      const btnCls = 'p-2 rounded-lg bg-obsidian-900 border border-slate-800 text-slate-300 hover:text-[#00e5a0] hover:border-[#00e5a0]/50 transition';
+
+      container.innerHTML = `
+        <a href="${SITE_CONFIG.githubUrl}" target="_blank" rel="noopener noreferrer" title="GitHub (${SITE_CONFIG.githubHandle})" aria-label="GitHub" class="${btnCls}">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+        <a href="${SITE_CONFIG.youtubeUrl}" target="_blank" rel="noopener noreferrer" title="YouTube (${SITE_CONFIG.youtubeHandle})" aria-label="YouTube" class="${btnCls}">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+        </a>
+        <a href="mailto:${SITE_CONFIG.email}" title="Email (${SITE_CONFIG.email})" aria-label="Email" class="${btnCls}">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="${waHello}" target="_blank" rel="noopener noreferrer" title="WhatsApp (${SITE_CONFIG.whatsappDisplay})" aria-label="WhatsApp" class="p-2 rounded-lg bg-[#00e5a0]/15 border border-[#00e5a0]/40 text-[#00e5a0] hover:bg-[#00e5a0] hover:text-[#0b0f17] transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      `;
+
+      document.getElementById('direct-wa-custom').href = buildWhatsAppUrl(
+        `Hi ${SITE_CONFIG.brandName}! I'd like to discuss a custom electronics prototype.`
+      );
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('category-filters');
+      container.innerHTML = CATEGORIES.map((cat) => {
+        const active = cat === activeCategory;
+        const cls = active
+          ? 'bg-[#00e5a0] text-[#0b0f17] border-[#00e5a0] font-semibold shadow-sm'
+          : 'bg-obsidian-900 text-slate-300 border-slate-800 hover:border-[#00e5a0]/60 hover:text-white';
+        return `
+          <button type="button" onclick="setCategory('${cat}')" class="px-4 py-2 rounded-full text-xs sm:text-sm font-mono border transition ${cls}">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      renderCategories();
+      renderProjects();
+    }
+
+    function resetFilters() {
+      activeCategory = 'All';
+      searchQuery = '';
+      document.getElementById('search-input').value = '';
+      renderCategories();
+      renderProjects();
+    }
+
+    function renderProjects() {
+      const grid = document.getElementById('projects-grid');
+      const empty = document.getElementById('empty-state');
+      const banner = document.getElementById('filter-banner');
+      const bannerText = document.getElementById('filter-banner-text');
+
+      const q = searchQuery.trim().toLowerCase();
+      const filtered = PROJECTS.filter((p) => {
+        const catMatch = activeCategory === 'All' || p.categories.includes(activeCategory);
+        const searchMatch =
+          !q ||
+          p.title.toLowerCase().includes(q) ||
+          p.shortDesc.toLowerCase().includes(q) ||
+          p.tags.some((t) => t.toLowerCase().includes(q)) ||
+          p.categories.some((c) => c.toLowerCase().includes(q));
+        return catMatch && searchMatch;
+      });
+
+      if (activeCategory !== 'All' || q) {
+        banner.classList.remove('hidden');
+        bannerText.textContent = `Showing ${filtered.length} of ${PROJECTS.length} projects` + (activeCategory !== 'All' ? ` • Category: ${activeCategory}` : '') + (q ? ` • Search: "${searchQuery}"` : '');
+      } else {
+        banner.classList.add('hidden');
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+
+      grid.innerHTML = filtered.map((p) => {
+        const startPrice = Math.min(...p.variants.map((v) => v.price));
+        return `
+          <article class="group flex flex-col rounded-2xl bg-obsidian-900 border border-slate-800 hover:border-[#00e5a0]/60 transition-all duration-200 overflow-hidden shadow-lg shadow-black/20">
+            <!-- Hardware Illustration / Photo -->
+            <div onclick="openProjectModal('${p.id}', 'overview')" class="relative cursor-pointer aspect-[16/9] bg-[#070b12] border-b border-slate-800 overflow-hidden">
+              <div class="w-full h-full group-hover:scale-[1.03] transition-transform duration-300">
+                ${renderProjectVisual(p)}
+              </div>
+              <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold bg-[#0b0f17]/85 backdrop-blur-md text-[#00e5a0] border border-[#00e5a0]/35">
+                  ${p.categories[0]}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold bg-[#0b0f17]/85 backdrop-blur-md ${getDifficultyClass(p.difficulty)}">
+                  ${p.difficulty}
+                </span>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-5 sm:p-6 flex flex-col flex-1">
+              <h3 onclick="openProjectModal('${p.id}', 'overview')" class="cursor-pointer text-lg sm:text-xl font-bold text-white group-hover:text-[#00e5a0] transition leading-snug">
+                ${p.title}
+              </h3>
+
+              <p class="mt-2.5 text-sm text-slate-400 leading-relaxed flex-1">
+                ${p.shortDesc}
+              </p>
+
+              <!-- Tech Tags -->
+              <div class="mt-4 flex flex-wrap gap-1.5">
+                ${p.tags.map((t) => `
+                  <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#0b0f17] text-slate-300 border border-slate-800">${t}</span>
+                `).join('')}
+              </div>
+
+              <!-- Footer: Starting Price & Action Buttons -->
+              <div class="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Starting From</div>
+                  <div class="font-mono font-bold text-lg text-white">${formatINR(startPrice)}</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="openProjectModal('${p.id}', 'bom')" class="px-3.5 py-2 rounded-xl text-xs font-mono font-semibold bg-obsidian-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                    Specs &amp; BOM
+                  </button>
+                  <button type="button" onclick="openProjectModal('${p.id}', 'overview')" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[#00e5a0] hover:bg-[#00c98c] text-[#0b0f17] transition">
+                    Order / Files
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderContactCards() {
+      const container = document.getElementById('contact-cards');
+      const waDirect = buildWhatsAppUrl(`Hi ${SITE_CONFIG.brandName}! I visited your store and would like to connect.`);
+
+      const cards = [
+        {
+          title: 'WhatsApp (Fastest)',
+          value: SITE_CONFIG.whatsappDisplay,
+          href: waDirect,
+          accent: 'text-[#00e5a0] border-[#00e5a0]/30 bg-[#00e5a0]/10',
+          icon: `<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>`,
+        },
+        {
+          title: 'Email',
+          value: SITE_CONFIG.email,
+          href: `mailto:${SITE_CONFIG.email}`,
+          accent: 'text-[#ffb020] border-[#ffb020]/30 bg-[#ffb020]/10',
+          icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>`,
+        },
+        {
+          title: 'GitHub Repositories',
+          value: SITE_CONFIG.githubHandle,
+          href: SITE_CONFIG.githubUrl,
+          accent: 'text-sky-400 border-sky-400/30 bg-sky-400/10',
+          icon: `<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>`,
+        },
+        {
+          title: 'YouTube Demos',
+          value: SITE_CONFIG.youtubeHandle,
+          href: SITE_CONFIG.youtubeUrl,
+          accent: 'text-rose-400 border-rose-400/30 bg-rose-400/10',
+          icon: `<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>`,
+        },
+      ];
+
+      container.innerHTML = cards.map((c) => `
+        <a href="${c.href}" target="${c.href.startsWith('mailto:') ? '_self' : '_blank'}" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-obsidian-900 border border-slate-800 hover:border-[#00e5a0]/60 transition flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${c.accent}">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">${c.title}</div>
+            <div class="text-sm font-semibold text-white group-hover:text-[#00e5a0] truncate transition">${c.value}</div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 7. PROJECT MODAL (ARCHIVE TABS + CHECKOUT SIDEBAR)
+    // =========================================================================
+    function openProjectModal(projectId, initialTab = 'overview') {
+      const project = PROJECTS.find((p) => p.id === projectId);
+      if (!project) return;
+
+      activeProject = project;
+      activeVariantIdx = 0;
+
+      // Header
+      document.getElementById('modal-category').textContent = project.categories.join(' • ');
+      const diffEl = document.getElementById('modal-difficulty');
+      diffEl.textContent = project.difficulty;
+      diffEl.className = `text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-md ${getDifficultyClass(project.difficulty)}`;
+      document.getElementById('modal-title').textContent = project.title;
+
+      // Overview Tab
+      document.getElementById('modal-visual').innerHTML = renderProjectVisual(project);
+      document.getElementById('modal-description').textContent = project.fullDesc;
+
+      const videoBox = document.getElementById('modal-video');
+      if (project.youtubeEmbedUrl) {
+        videoBox.innerHTML = `<iframe class="w-full h-full" src="${project.youtubeEmbedUrl}" title="${project.title} Demo" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        videoBox.innerHTML = `
+          <a href="${SITE_CONFIG.youtubeUrl}" target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center">
+            <div class="w-12 h-12 rounded-full bg-[#ffb020]/15 border border-[#ffb020]/40 flex items-center justify-center text-[#ffb020] group-hover:scale-105 transition mb-2.5">
+              <svg class="w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+            <div class="text-xs font-mono font-semibold text-white">Watch Demos on YouTube</div>
+            <div class="text-[11px] font-mono text-slate-400 mt-1">${SITE_CONFIG.youtubeHandle}</div>
+          </a>
+        `;
+      }
+
+      // Specs Table
+      document.getElementById('modal-specs').innerHTML = project.specs.map(([k, v]) => `
+        <tr class="bg-obsidian-900">
+          <td class="px-4 py-2.5 text-slate-400 w-2/5">${k}</td>
+          <td class="px-4 py-2.5 text-white font-medium">${v}</td>
+        </tr>
+      `).join('');
+
+      // BOM Table + Approximate Total
+      const totalBomCost = project.bom.reduce((sum, item) => sum + (item.approxCost * item.qty), 0);
+      document.getElementById('bom-total-est').textContent = `Est. Parts Total: ~${formatINR(totalBomCost)}`;
+      document.getElementById('modal-bom').innerHTML = project.bom.map((item) => `
+        <tr class="bg-obsidian-900">
+          <td class="px-4 py-2.5 font-semibold text-white">${item.part}</td>
+          <td class="px-4 py-2.5 text-slate-400">${item.spec}</td>
+          <td class="px-3 py-2.5 text-center text-[#00e5a0] font-bold">${item.qty}</td>
+          <td class="px-4 py-2.5 text-right text-slate-300">~${formatINR(item.approxCost * item.qty)}</td>
+        </tr>
+      `).join('');
+
+      // Code Tab
+      document.getElementById('modal-code-label').textContent = project.codeLabel;
+      document.getElementById('modal-code').textContent = project.codeSnippet;
+
+      // GitHub Repo Link
+      document.getElementById('modal-github-btn').href = project.githubUrl || SITE_CONFIG.githubUrl;
+
+      // Variants & Show Modal
+      renderModalVariants();
+      switchModalTab(initialTab);
+      document.getElementById('project-modal').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function switchModalTab(tab) {
+      ['overview', 'bom', 'code'].forEach((t) => {
+        document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+      });
+      document.querySelectorAll('.modal-tab').forEach((btn) => {
+        const isCurrent = btn.dataset.tab === tab;
+        btn.className = isCurrent
+          ? 'modal-tab flex-1 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-obsidian-800 text-[#00e5a0] border border-[#00e5a0]/30 transition'
+          : 'modal-tab flex-1 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition';
+      });
+    }
+
+    function renderModalVariants() {
+      if (!activeProject) return;
+      const list = document.getElementById('variant-list');
+
+      list.innerHTML = activeProject.variants.map((v, idx) => {
+        const selected = idx === activeVariantIdx;
+        const cardStyle = selected
+          ? 'border-[#00e5a0] bg-[#00e5a0]/10 ring-1 ring-[#00e5a0]/30'
+          : 'border-slate-800 bg-obsidian-900 hover:border-slate-600';
+        return `
+          <button type="button" onclick="selectVariant(${idx})" class="w-full text-left p-3.5 rounded-xl border transition flex items-start justify-between gap-3 ${cardStyle}">
+            <div class="flex items-start gap-2.5">
+              <span class="mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${selected ? 'border-[#00e5a0] bg-[#00e5a0]' : 'border-slate-500'}">
+                ${selected ? '<span class="w-1.5 h-1.5 rounded-full bg-[#0b0f17]"></span>' : ''}
+              </span>
+              <div>
+                <div class="text-sm font-semibold text-white">${v.label}</div>
+                <div class="text-xs text-slate-400 mt-0.5">${v.sublabel}</div>
+              </div>
+            </div>
+            <div class="font-mono font-bold text-sm text-[#00e5a0] shrink-0">${formatINR(v.price)}</div>
+          </button>
+        `;
+      }).join('');
+
+      updateOrderPanel();
+    }
+
+    function selectVariant(idx) {
+      activeVariantIdx = idx;
+      renderModalVariants();
+    }
+
+    function updateOrderPanel() {
+      if (!activeProject) return;
+      const v = activeProject.variants[activeVariantIdx];
+
+      document.getElementById('checkout-price').textContent = formatINR(v.price);
+      document.getElementById('variant-delivery').textContent = v.delivery;
+
+      document.getElementById('variant-includes').innerHTML = v.includes.map((inc) => `
+        <li class="flex items-start gap-2">
+          <svg class="w-4 h-4 text-[#00e5a0] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>${inc}</span>
+        </li>
+      `).join('');
+
+      // Pre-filled WhatsApp Order Link (0% Fee UPI)
+      const orderMsg = `Hi ${SITE_CONFIG.brandName}!\nI want to order:\n\n• Project: ${activeProject.title}\n• Edition: ${v.label}\n• Price: ${formatINR(v.price)}\n\nPlease share your UPI ID / order confirmation details.`;
+      document.getElementById('whatsapp-order-btn').href = buildWhatsAppUrl(orderMsg);
+    }
+
+    function openPaymentCheckout() {
+      if (!activeProject) return;
+      const v = activeProject.variants[activeVariantIdx];
+      if (!v.paymentUrl || v.paymentUrl.includes('placeholder-')) {
+        showToast('Payment link not set yet — use "Order via WhatsApp" or add your Razorpay/Instamojo URL in PROJECTS.');
+        return;
+      }
+      window.open(v.paymentUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    function copySnippet() {
+      if (!activeProject) return;
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = activeProject.codeSnippet;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(`Copied ${activeProject.codeLabel} to clipboard!`);
+      } catch (e) {
+        showToast('Unable to copy automatically. Please select and copy manually.');
+      }
+    }
+
+    // =========================================================================
+    // 8. CUSTOM PROTOTYPE MODAL
+    // =========================================================================
+    function openCustomModal() {
+      document.getElementById('custom-modal').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeCustomModal() {
+      document.getElementById('custom-modal').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function sendCustomWhatsApp(event) {
+      event.preventDefault();
+      const name = document.getElementById('cust-name').value.trim();
+      const cat = document.getElementById('cust-cat').value;
+      const details = document.getElementById('cust-details').value.trim();
+
+      const msg = `Hi ${SITE_CONFIG.brandName}!\nCustom Prototype Request:\n\n• Name: ${name}\n• Category: ${cat}\n• Requirements: ${details}`;
+      window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
+      closeCustomModal();
+      event.target.reset();
+      showToast('Opening WhatsApp with your custom brief...');
+    }
+
+    // =========================================================================
+    // 9. INITIALIZATION
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('hero-project-count').textContent = String(PROJECTS.length).padStart(2, '0');
+      renderHeaderQuickLinks();
+      renderCategories();
+      renderProjects();
+      renderContactCards();
+
+      document.getElementById('search-input').addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderProjects();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeProjectModal();
+          closeCustomModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
